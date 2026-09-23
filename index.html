@@ -489,17 +489,15 @@ function startRec(){
   recognition.continuous=false;
   recognition.interimResults=true;
   recognition.lang='en-US';
-  recognition.onresult=function(e){
+  recognitionvar __committed=(typeof spokenTranscript!=='undefined'?spokenTranscript:'')||'';
+.onresult=function(e){
     var interim='';
-    for(var i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal) spokenTranscript+=e.results[i][0].transcript+' ';
-      else interim+=e.results[i][0].transcript;
-    }
+    var __f='';for(var i=0;i<e.results.length;i++){if(e.results[i].isFinal)__f+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript+' ';}spokenTranscript=(__committed+' '+__f).replace(/\s+/g,' ').trim();
     document.getElementById('speakTranscriptText').textContent=(spokenTranscript+interim).trim();
     document.getElementById('speakTranscriptBox').style.display='block';
   };
   recognition.onerror=function(){};
-  recognition.onend=function(){ if(isRec){ try{recognition.start();}catch(e){} } };
+  recognition.onend=function(){__committed=spokenTranscript; if(isRec){ try{recognition.start();}catch(e){} } };
   try{recognition.start();}catch(e){}
 }
 function stopRec(){
