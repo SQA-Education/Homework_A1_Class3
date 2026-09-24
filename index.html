@@ -489,8 +489,7 @@ function startRec(){
   recognition.continuous=false;
   recognition.interimResults=true;
   recognition.lang='en-US';
-  recognitionvar __committed=(typeof spokenTranscript!=='undefined'?spokenTranscript:'')||'';
-.onresult=function(e){
+  var __committed=(typeof spokenTranscript!=='undefined'?spokenTranscript:'')||''; recognition.onresult=function(e){
     var interim='';
     var __f='';for(var i=0;i<e.results.length;i++){if(e.results[i].isFinal)__f+=e.results[i][0].transcript+' ';else interim+=e.results[i][0].transcript+' ';}spokenTranscript=(__committed+' '+__f).replace(/\s+/g,' ').trim();
     document.getElementById('speakTranscriptText').textContent=(spokenTranscript+interim).trim();
